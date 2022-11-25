@@ -1,22 +1,19 @@
-# rosave_extension
-allows you to save robux purchasing items, or donate some of the price to another user.
+# RoSave
+An extension that saves you Robux on the catalog!
 
-The actual code is in the extension folder, everything outside of it isn't directly part of the extension such as defaults.
+# Usage
+Click the extension icon, and save a place id in the settings tab.
 
-#values.json
-This file contains values loaded when the extension starts.
-devDonateId is the place id used if the option to donate to the developer is selected.
-The savings object contains the amount saved for each item type, multiplied with the expected price.
-{
-    "devDonateId": 10921698148,
-    "savings": {
-        "layeredClothing": 0.4,
-        "classicClothing": 0.1,
-        "accessories": 0.4,
-        "passes": 0.1,
-        "plugins": 0.1,
-        "bundles": 0.4,
-        "classicHeads":0.4,
-        "classicFaces":0.4
-    }
-}
+You can find the place id in the url of a game: ww<area>w.<area>roblox.<area>com/games/**12345**/game-name
+
+Purchasing items on the catalog will give some of the cost to the game owner
+
+I recommend the place is owned by a group you own, as part of the cost will *not* be given if the place is owned by you, and you can just give yourself the group funds.
+
+Alternatively, you can use a game owned by another user/group to donate to them when you purchase items!
+
+If you wish to donate to [the developer](https://www.roblox.com/users/103101520/profile), click save without specifying a place id ❤️
+
+# Downloads
+
+(NOT PUBLISHED YET)
