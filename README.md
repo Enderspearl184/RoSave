@@ -17,3 +17,7 @@ If you wish to donate to [the developer](https://www.roblox.com/users/103101520/
 # Downloads
 
 (NOT PUBLISHED YET)
+
+# Contributions
+
+If you want to contribute to my terrible code, [the repository](https://github.com/Enderspearl184/RoSave) is public, submit a pull request!
