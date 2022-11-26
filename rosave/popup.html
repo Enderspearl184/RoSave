@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<!-- WARNING: BAD CODE AHEAD -->
+<html><head>
+  <style>
+  body {
+    min-height: 575px;
+    max-height: 750px;
+    min-width:375px;
+  }</style><script defer src="/assets/inline.js"></script>
+  <link rel="stylesheet" href="/assets/flowbite.min.css"><script src="/assets/flowbite.js"></script><link rel="stylesheet" href="/assets/tailwind.css"></script></head><body>
+  <div class="relative flex min-h-screen flex-col justify-center overflow-hidden bg-blue-300">
+    <div class="absolute inset-0 bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
+    <div class="relative w-screen h-screen bg-white px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10">
+      <div class="max-w-md">
+        <div class="text-4xl font-light">RoSave</div><br>
+        <div>
+  
+  <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+      <ul class="place-content-center flex flex-wrap -mb-px text-sm font-medium text-center" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
+          <li class="mr-2" role="presentation">
+              <button class="inline-block p-4 rounded-t-lg border-b-2" id="totals-tab" data-tabs-target="#totals" type="button" role="tab" aria-controls="totals" aria-selected="true">Totals</button>
+          </li>
+          <li class="mr-2" role="presentation">
+              <button class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="settings-tab" data-tabs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">Settings</button>
+          </li>
+      </ul>
+  </div>
+  <div id="myTabContent">
+      <div class="hidden p-4 rounded-lg" id="totals" role="tabpanel" aria-labelledby="totals-tab">
+  
+            <div class="text-2xl">Saved <span class="text-green-400 font-semibold" id="total">LOADING...</span> so far!</div>
+            <ul class="space-y-4 -space-x-4">
+        
+        <!-- this stupid thing doesnt lay out correctly unless i do this terribleness -->
+              <li>
+              </li>
+              <li class="flex items-center">
+                <p class="ml-4">
+                  <span class="text-green-400 font-semibold" id="classicClothing">LOADING...</span> from Classic Clothing
+                </p>
+              </li>
+              <li class="flex items-center">
+                <p class="ml-4">
+                  <span class="text-green-400 font-semibold" id="layeredClothing">LOADING...</span> from Layered Clothing
+                </p>
+              </li>
+                          <li class="flex items-center">
+                <p class="ml-4">
+                  <span class="text-green-400 font-semibold" id="accessories">LOADING...</span> from Accessories
+                </p>
+              </li>
+              <li class="flex items-center">
+                <p class="ml-4">
+                  <span class="text-green-400 font-semibold" id="bundles">LOADING...</span> from Bundles
+                </p>
+              </li>
+              <li class="flex items-center">
+                <p class="ml-4">
+                  <span class="text-green-400 font-semibold" id="heads">LOADING...</span> from Classic Heads
+                </p>
+              </li>
+              <li class="flex items-center">
+                <p class="ml-4">
+                  <span class="text-green-400 font-semibold" id="faces">LOADING...</span> from Classic Faces
+                </p>
+              </li>
+              <li class="flex items-center">
+                <p class="ml-4">
+                  <span class="text-green-400 font-semibold" id="passes">LOADING...</span> from Gamepasses
+                </p>
+              </li>
+        <li class="flex items-center">
+                <p class="ml-4">
+                  <span class="text-green-400 font-semibold" id="plugins">LOADING...</span> from Plugins
+                </p>
+              </li>
+            </ul>
+  
+      </div>
+      <div class="hidden p-4 rounded-lg" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+            <p class="font-light">Enter the ID of a place. The place owner will get part of the cost when you purchase items on site.
+            <p class="font-semibold">The place <b>cannot</b> be owned by the logged-in user, but <i>can</i> be owned by a group regardless of owner, or another user.</p><br>
+            <input class="outline outline-blue-400 rounded" type="number" name="placeid" id="placeid" placeholder="Purchase Place ID">
+            <br><br><button class="border-blue-400 outline-blue-400 outline rounded-xl text-blue-400 transition-all hover:outline-blue-200 hover:text-blue-200" id="saveSettings">&nbsp;&nbsp;Save&nbsp;&nbsp;</button>
+      </div>
+  </div>
+  
+      </div>
+    </div>
+  </div>
+  </div></body></html>
