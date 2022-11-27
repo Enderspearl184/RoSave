@@ -16,7 +16,9 @@ If you wish to donate to [the developer](https://www.roblox.com/users/103101520/
 
 # Downloads
 
-(NOT PUBLISHED YET)
+Chrome (I don't have a developer account yet)
+
+[Firefox](https://addons.mozilla.org/en-US/firefox/addon/rosave/)
 
 # Contributions
 
