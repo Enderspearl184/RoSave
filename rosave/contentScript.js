@@ -1,7 +1,7 @@
 //inject a script into the page to monkeypatch xmlhttprequest
 const extension = globalThis.chrome || globalThis.browser //chrome and firefox
 
-var devDonate=false
+window.devDonate=false
 
 const savings = {
     "layeredClothing": 0.4,
@@ -24,11 +24,12 @@ function injectScript(file_path, tag) {
 }
 
 extension.storage.sync.get("placeid").then(async(res)=>{
+    console.log(res)
     res=res.placeid
     if (!res) {
         let val = await extension.storage.local.get("devDonateId")
         res=val.devDonateId
-        devDonate=true
+        window.devDonate=true
     }
     const elem = document.createElement("meta")
     elem.setAttribute("id","rosave_placeid")
@@ -40,12 +41,12 @@ extension.storage.sync.get("placeid").then(async(res)=>{
 const handleFromWeb = async (event) => {
     if (event.data.from=="rosave_inject") {
         const data = event.data.data;
-        if (!devDonate) {
+        if (!window.devDonate) {
             extension.storage.sync.get("amounts",function(val){
                 val=val.amounts
-                val[data.type]+=data.amount*savings[data.type]
-                val.total+=data.amount*savings[data.type]
-                extension.storage.sync.set({amounts:val})
+                val[data.type]+=Math.floor(data.amount*savings[data.type])
+                val.total+=Math.floor(data.amount*savings[data.type])
+		extension.storage.sync.set({amounts:val})
             })
         }
     }

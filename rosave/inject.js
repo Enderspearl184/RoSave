@@ -5,83 +5,82 @@ let placeId = parseInt(document.querySelector("#rosave_placeid").getAttribute("p
 //tell the extension that a purchase happened and stuff
 async function assetTypes(req){
     const json=await req.json()
-    if (!json.errors && json.purchased) {
-        //HELP
+    if (json.reason=="Success") {
         switch (json.assetType) {
             case "Bundle":
-                window.postMessage({ from: 'rosave_inject', data:{type:"bundles",amount:body.expectedPrice}})
+                window.postMessage({ from: 'rosave_inject', data:{type:"bundles",amount:json.price}})
                 break;
             case "Game Pass":
-                window.postMessage({ from: 'rosave_inject', data:{type:"passes",amount:body.expectedPrice}})
+                window.postMessage({ from: 'rosave_inject', data:{type:"passes",amount:json.price}})
                 break;
             case "Shirt":
-                window.postMessage({ from: 'rosave_inject', data:{type:"classicClothing",amount:body.expectedPrice}})
+                window.postMessage({ from: 'rosave_inject', data:{type:"classicClothing",amount:json.price}})
                 break;
             case "T-Shirt":
-                window.postMessage({ from: 'rosave_inject', data:{type:"classicClothing",amount:body.expectedPrice}})
+                window.postMessage({ from: 'rosave_inject', data:{type:"classicClothing",amount:json.price}})
                 break;
             case "Pants":
-                window.postMessage({ from: 'rosave_inject', data:{type:"classicClothing",amount:body.expectedPrice}})
+                window.postMessage({ from: 'rosave_inject', data:{type:"classicClothing",amount:json.price}})
                 break;
             case "T-Shirt Accessory":
-                window.postMessage({ from: 'rosave_inject', data:{type:"layeredClothing",amount:body.expectedPrice}})
+                window.postMessage({ from: 'rosave_inject', data:{type:"layeredClothing",amount:json.price}})
                 break;
             case "Shirt Accessory":
-                window.postMessage({ from: 'rosave_inject', data:{type:"layeredClothing",amount:body.expectedPrice}})
+                window.postMessage({ from: 'rosave_inject', data:{type:"layeredClothing",amount:json.price}})
                 break;
             case "Sweater Accessory":
-                window.postMessage({ from: 'rosave_inject', data:{type:"layeredClothing",amount:body.expectedPrice}})
+                window.postMessage({ from: 'rosave_inject', data:{type:"layeredClothing",amount:json.price}})
                 break;
             case "Jacket Accessory":
-                window.postMessage({ from: 'rosave_inject', data:{type:"layeredClothing",amount:body.expectedPrice}})
+                window.postMessage({ from: 'rosave_inject', data:{type:"layeredClothing",amount:json.price}})
                 break;
             case "Pants Accessory":
-                window.postMessage({ from: 'rosave_inject', data:{type:"layeredClothing",amount:body.expectedPrice}})
+                window.postMessage({ from: 'rosave_inject', data:{type:"layeredClothing",amount:json.price}})
                 break;
             case "Shorts Accessory":
-                window.postMessage({ from: 'rosave_inject', data:{type:"layeredClothing",amount:body.expectedPrice}})
+                window.postMessage({ from: 'rosave_inject', data:{type:"layeredClothing",amount:json.price}})
                 break;
             case "Dress Skirt Accessory":
-                window.postMessage({ from: 'rosave_inject', data:{type:"layeredClothing",amount:body.expectedPrice}})
+                window.postMessage({ from: 'rosave_inject', data:{type:"layeredClothing",amount:json.price}})
                 break;
             case "Hat":
-                window.postMessage({ from: 'rosave_inject', data:{type:"accessories",amount:body.expectedPrice}})
+                window.postMessage({ from: 'rosave_inject', data:{type:"accessories",amount:json.price}})
                 break;
             case "Face Accessory":
-                window.postMessage({ from: 'rosave_inject', data:{type:"accessories",amount:body.expectedPrice}})
+                window.postMessage({ from: 'rosave_inject', data:{type:"accessories",amount:json.price}})
                 break;
             case "Neck Accessory":
-                window.postMessage({ from: 'rosave_inject', data:{type:"accessories",amount:body.expectedPrice}})
+                window.postMessage({ from: 'rosave_inject', data:{type:"accessories",amount:json.price}})
                 break;
             case "Shoulder Accessory":
-                window.postMessage({ from: 'rosave_inject', data:{type:"accessories",amount:body.expectedPrice}})
+                window.postMessage({ from: 'rosave_inject', data:{type:"accessories",amount:json.price}})
                 break;
             case "Front Accessory":
-                window.postMessage({ from: 'rosave_inject', data:{type:"accessories",amount:body.expectedPrice}})
+                window.postMessage({ from: 'rosave_inject', data:{type:"accessories",amount:json.price}})
                 break;
             case "Back Accessory":
-                window.postMessage({ from: 'rosave_inject', data:{type:"accessories",amount:body.expectedPrice}})
+                window.postMessage({ from: 'rosave_inject', data:{type:"accessories",amount:json.price}})
                 break;
             case "Waist Accessory":
-                window.postMessage({ from: 'rosave_inject', data:{type:"accessories",amount:body.expectedPrice}})
+                window.postMessage({ from: 'rosave_inject', data:{type:"accessories",amount:json.price}})
                 break;
             case "Gear":
-                window.postMessage({ from: 'rosave_inject', data:{type:"accessories",amount:body.expectedPrice}})
+                window.postMessage({ from: 'rosave_inject', data:{type:"accessories",amount:json.price}})
                 break;
             case "Hair Accessory":
-                window.postMessage({ from: 'rosave_inject', data:{type:"accessories",amount:body.expectedPrice}})
+                window.postMessage({ from: 'rosave_inject', data:{type:"accessories",amount:json.price}})
                 break;
             case "Head":
-                window.postMessage({ from: 'rosave_inject', data:{type:"classicHeads",amount:body.expectedPrice}})
+                window.postMessage({ from: 'rosave_inject', data:{type:"classicHeads",amount:json.price}})
                 break;
             case "Face":
-                window.postMessage({ from: 'rosave_inject', data:{type:"classicFaces",amount:body.expectedPrice}})
+                window.postMessage({ from: 'rosave_inject', data:{type:"classicFaces",amount:json.price}})
                 break;
             case "Emote Animation":
-                window.postMessage({ from: 'rosave_inject', data:{type:"emotes",amount:body.expectedPrice}})
+                window.postMessage({ from: 'rosave_inject', data:{type:"emotes",amount:json.price}})
                 break;
             case "Emote Animation":
-                window.postMessage({ from: 'rosave_inject', data:{type:"plugins",amount:body.expectedPrice}})
+                window.postMessage({ from: 'rosave_inject', data:{type:"plugins",amount:json.price}})
                 break;
             default:
                 console.info("RoSave: Unknown AssetType " + json.assetType)
