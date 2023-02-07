@@ -1,5 +1,6 @@
 const extension = globalThis.chrome || globalThis.browser //chrome and firefox
-const input = document.querySelector("#placeid")
+const placeidinput = document.querySelector("#placeid")
+const showplaceidinput = document.querySelector("#showplaceid")
 const saveButton = document.querySelector("#saveSettings")
 
 const abbreviateNumber = (number, decPlaces=1) => {
@@ -38,9 +39,40 @@ const abbreviateNumber = (number, decPlaces=1) => {
   return number
 }
 
+//incase the values get fucked up, fix em!
+function recalcAmounts(val){
+  let didReset=false
+
+  if (isNaN(val.total)) {val.total=0;didReset=true}
+  if (isNaN(val.classicClothing)) {val.classicClothing=0;didReset=true}
+  if (isNaN(val.layeredClothing)) {val.layeredClothing=0;didReset=true}
+  if (isNaN(val.accessories)) {val.accessories=0;didReset=true}
+  if (isNaN(val.bundles)) {val.bundles=0;didReset=true}
+  if (isNaN(val.heads)) {val.heads=0;didReset=true}
+  if (isNaN(val.faces)) {val.faces=0;didReset=true}
+  if (isNaN(val.passes)) {val.passes=0;didReset=true}
+  if (isNaN(val.plugins)) {val.plugins=0;didReset=true}
+  console.log(didReset)
+  if (didReset) {
+    //alert("Some or all of the Saved Robux counters have been reset due to an error.")
+    let total = 0
+    for (let key of Object.keys(val)) {
+      if (key!=="total") {
+        total+=val[key]
+      }
+    }
+    val.total=total
+    //save the reset counts
+    extension.storage.sync.set({amounts:val})
+  }
+  return val
+}
+
 extension.storage.sync.get("amounts",function(val){
     val=val.amounts
-    console.log(val)
+    //console.log(val)
+    console.log(recalcAmounts)
+    val = recalcAmounts(val)//won't do anything if the values are normal.
 
     let yeah = document.querySelector("#total")
     yeah.title=val.total
@@ -80,10 +112,15 @@ extension.storage.sync.get("amounts",function(val){
 })
 
 extension.storage.sync.get("placeid",function(val){
-    input.value=val.placeid
+    placeidinput.value=val.placeid
+})
+
+extension.storage.sync.get("showplaceid",function(val){
+  showplaceidinput.checked=val.showplaceid
 })
 
 saveButton.onclick=function() {
-    extension.storage.sync.set({placeid:input.value})
+    extension.storage.sync.set({placeid:placeidinput.value})
+    extension.storage.sync.set({showplaceid:showplaceidinput.checked})
     extension.tabs.query({url:"<all_urls>"},function(tabs){tabs.forEach((tab)=>{extension.tabs.reload(tab.id)})})
 }

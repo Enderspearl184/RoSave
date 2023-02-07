@@ -31,22 +31,27 @@ extension.storage.sync.get("placeid").then(async(res)=>{
         res=val.devDonateId
         window.devDonate=true
     }
+    let showText = await extension.storage.sync.get("showplaceid")
+    showText = showText.showplaceid
     const elem = document.createElement("meta")
-    elem.setAttribute("id","rosave_placeid")
+    elem.setAttribute("id","rosave_data")
     elem.setAttribute("placeid",res)
+    elem.setAttribute("showplaceid", Number(showText))
     document.head.appendChild(elem)
     injectScript(extension.runtime.getURL('inject.js'), 'head');
-}).catch((err)=>console.error)
+})
 
 const handleFromWeb = async (event) => {
     if (event.data.from=="rosave_inject") {
         const data = event.data.data;
+        if (isNaN(data.amount)) {data.amount=0}
         if (!window.devDonate) {
             extension.storage.sync.get("amounts",function(val){
                 val=val.amounts
+		        if (val[data.type]==undefined) {return}
                 val[data.type]+=Math.floor(data.amount*savings[data.type])
                 val.total+=Math.floor(data.amount*savings[data.type])
-		extension.storage.sync.set({amounts:val})
+		        extension.storage.sync.set({amounts:val})
             })
         }
     }
