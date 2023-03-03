@@ -27,7 +27,8 @@
     },
     "permissions": [
         "storage",
-	"https://*.roblox.com/*"
+        "https://*.roblox.com/*",
+        "webRequest"
     ],
     "web_accessible_resources" : ["inject.js"],
     "icons": { 

@@ -119,8 +119,41 @@ extension.storage.sync.get("showplaceid",function(val){
   showplaceidinput.checked=val.showplaceid
 })
 
-saveButton.onclick=function() {
-    extension.storage.sync.set({placeid:placeidinput.value})
-    extension.storage.sync.set({showplaceid:showplaceidinput.checked})
-    extension.tabs.query({url:"<all_urls>"},function(tabs){tabs.forEach((tab)=>{extension.tabs.reload(tab.id)})})
+saveButton.onclick=async function() {
+    await extension.storage.sync.set({placeid:placeidinput.value})
+    await extension.storage.sync.set({showplaceid:showplaceidinput.checked})
+
+    //thank you manifest v3 for making me do this -_-
+    if (extension.runtime.getManifest()["manifest_version"]==3) {
+      let placeid = await extension.storage.sync.get("placeid")
+      //console.log(res)
+      placeid=placeid.placeid
+      if (!placeid) {
+          let val = await extension.storage.local.get("devDonateId")
+          placeid=val.devDonateId
+      }
+
+      extension.declarativeNetRequest.updateDynamicRules({
+          addRules:[{
+              action:{
+                  type:"modifyHeaders",
+                  requestHeaders:[
+                      {
+                          header:"Roblox-Place-Id",
+                          operation:"set",
+                          value:placeid.toString()
+                      }
+                  ]
+              },
+              condition:{
+                  urlFilter:"|https://economy.roblox.com/v1/purchases/products/"
+              },
+              id:1,
+              priority:1
+          }],
+          removeRuleIds:[1]    
+      })
+    }
+
+    await extension.tabs.query({url:"<all_urls>"},function(tabs){tabs.forEach((tab)=>{extension.tabs.reload(tab.id)})})
 }
