@@ -1,5 +1,5 @@
 # RoSave
-An extension that saves you Robux on the catalog!
+An extension that USED TO IT NO LONGER WORKS saves you Robux on the catalog!
 
 # Usage
 Click the extension icon, and save a place id in the settings tab.
