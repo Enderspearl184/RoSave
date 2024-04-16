@@ -1,5 +1,5 @@
 # RoSave
-An extension that saves you Robux on the catalog!
+An extension that USED TO IT NO LONGER WORKS saves you Robux on the catalog!
 
 # Usage
 Click the extension icon, and save a place id in the settings tab.
@@ -16,7 +16,7 @@ If you wish to donate to [the developer](https://www.roblox.com/users/103101520/
 
 # Downloads
 
-Chrome (I don't have a developer account yet)
+[Chrome](https://chrome.google.com/webstore/detail/rosave/nmoflhdmgfgcoaiecmjagdkmnlajaebf)
 
 [Firefox](https://addons.mozilla.org/en-US/firefox/addon/rosave/)
 
