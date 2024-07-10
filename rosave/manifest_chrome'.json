@@ -1,35 +1,34 @@
 {
-    "manifest_version": 2,
+    "manifest_version": 3,
     "name": "RoSave",
     "description": "Save Robux purchasing items on the Roblox catalog!",
-    "version": "1.5",
-    "browser_action":{
+    "version": "1.1",
+    "host_permissions": [
+        "*://*.roblox.com/*"
+    ],
+    "action":{
         "default_popup": "popup.html",
-        "default_icon": {"100":"icon.png"}
+        "default_icon": "icon.png"
     },
-"browser_specific_settings": {
-  "gecko": {
-    "id": "{0c6a6eb8-39ce-4eae-9b1a-c1d34df849cd}"
-  }
-},
-
     "content_scripts": [
         {
           "matches": [
             "https://*.roblox.com/*"
           ],
           "js": ["contentScript.js"],
-	  "run_at":"document_start"
+          "run_at":"document_start"
         }
     ],
     "background": {
-        "scripts": ["main.js"]
+        "service_worker": "main.js"
     },
     "permissions": [
-        "storage",
-	"https://*.roblox.com/*"
+        "storage"
     ],
-    "web_accessible_resources" : ["inject.js"],
+    "web_accessible_resources" : [{
+        "resources": ["inject.js"],
+        "matches": ["<all_urls>"]
+      }],
     "icons": { 
         "100": "icon.png"
     }

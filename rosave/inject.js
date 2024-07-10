@@ -91,6 +91,33 @@ async function assetTypes(req){
     }
 }
 
+const pendingPurchases = {
+
+}
+
+function gameJoinMethod() {
+    const id = crypto.randomUUID()
+    const { promise, resolve, reject } = Promise.withResolvers()
+    pendingPurchases[id] = { resolve, reject }
+    window.postMessage({ from: 'rosave_inject_gamejoin', data:{id}})
+    return promise
+}
+
+const handleFromContentScript = async (event) => {
+    if (event.data.from=="rosave_inject_gamejoin") {
+        const data = event.data.data
+        if (data.response!==undefined && data.response!==null) {
+            if (data.response) {
+                pendingPurchases[data.id].resolve(data.response)
+            } else {
+                pendingPurchases[data.id].reject()
+            }
+        }
+    }
+};
+
+window.addEventListener('message', handleFromContentScript);
+
 //this is just unspaghettifying the xhr script
 function method(xhr,args) {
     let body = JSON.parse(args[0])
@@ -99,8 +126,8 @@ function method(xhr,args) {
     args[0]=JSON.stringify(body)
     xhr.addEventListener("load",function(){
         let res = JSON.parse(xhr.responseText)
-        if (!res.errors && res.purchased) {
-            fetch(`https://economy.roblox.com/v1/products/${res.productId}`,{credentials:"include"}).then(assetTypes)
+        if (!res.errors && res.purchasable) {
+            fetch(`https://economy.roblox.com/v1/products/${res.productId}?showPurchasable=true`,{credentials:"include"}).then(assetTypes)
         }
     })
 }
@@ -108,23 +135,42 @@ function method(xhr,args) {
 //monkeypatch XMLHttpRequest to edit the body and add the save stuff
 XMLHttpRequest.prototype.open=function(){
     //TODO check for nextgen endpoints https://economy.roblox.com/v2/metadata/nextgen-purchase-status 
+    //jk those dont exist anymore!!
     if (arguments[0]=="POST" && arguments[1]?.startsWith("https://economy.roblox.com/v1/purchases/products/")) {
         //monkeypatch the xhr send and set onload
+        console.log(arguments)
         const XHRSend=this.send
-        this.send=function(){
+        this.send=async function(){
             let args=[].concat(...arguments)
+            console.log(args)
             if (location.pathname.startsWith("/catalog/")) {
                 let id = parseInt(location.pathname.split("/catalog/")[1])
-                fetch(`https://economy.roblox.com/v2/assets/${id}/details`).then(async(res)=>{
+                fetch(`https://economy.roblox.com/v2/assets/${id}/details`, {credentials:"include"}).then(async(res)=>{
+                    let jobId;
                     try {
                         let json = await res.json()
                         if (!json.SaleAvailabilityLocations || json.SaleAvailabilityLocations.includes("AllUniverses")) {
+                            jobId = await gameJoinMethod()
+                            alert('returned')
                             method(this,args)
                         }
-                    } catch(err){console.error(err)}
+                    } catch(err){
+                        console.error(err)
+                    }
+                    alert(jobId)
+                    if (jobId) {
+                        this.setRequestHeader("Roblox-Place-Id",placeId.toString())
+                        this.setRequestHeader("Roblox-Game-Id",jobId)
+                    }
                     XHRSend.apply(this,args)
                 }).catch(()=>{XHRSend.apply(this,args)})
             } else {
+                let jobId = await gameJoinMethod()
+                if (jobId) {
+                    this.setRequestHeader("Roblox-Place-Id",placeId.toString())
+                    this.setRequestHeader("Roblox-Game-Id",jobId)
+                }
+                alert('returned 2')
                 method(this,args)
                 XHRSend.apply(this,args)
             }
@@ -145,6 +191,7 @@ window.fetch=async function(){
         body.saleLocationId=placeId,
         body.saleLocationType="Game"
         args[1].body=JSON.stringify(body)
+        await gameJoinMethod()
         const res = realfetch(...args)
         const promise = new Promise((resolve,reject)=>{res.then((data)=>{
             assetTypes(data.clone()); //clone it so we can read it here and the page script can too
@@ -166,10 +213,10 @@ if (window.location.hostname=="www.roblox.com" || window.location.hostname=="web
                 button.modified=true
                 button.onclick = function() {
                     setTimeout(function() {
-                        let modal=document.querySelector(".modal-btns")
+                        let modal=document.querySelector(".modal-buttons")
                         let child=document.createElement("div")
-                        child.setAttribute("class","modal-footer text-footer modal-footer-center")
-                        child.innerText=`Some of the cost will go to the creator of place`
+                        child.setAttribute("class","text-footer modal-footer-center")
+                        child.innerText=`Some of the cost will go to the creator of place `
                         let atag=document.createElement("a")
                         atag.setAttribute("href",`/games/${placeId}`)
                         atag.textContent=placeId
