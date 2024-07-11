@@ -3,18 +3,6 @@ const extension = globalThis.chrome || globalThis.browser //chrome and firefox
 let placeId
 window.devDonate=false
 
-const savings = {
-    "layeredClothing": 0.4,
-    "classicClothing": 0.1,
-    "accessories": 0.4,
-    "passes": 0.1,
-    "plugins": 0.1,
-    "bundles": 0.4,
-    "classicHeads":0.4,
-    "classicFaces":0.4,
-    "emotes":0.4
-}
-
 function injectScript(file_path, tag) {
     var node = document.getElementsByTagName(tag)[0];
     var script = document.createElement('script');
@@ -42,30 +30,6 @@ extension.storage.sync.get("placeid").then(async(res)=>{
     injectScript(extension.runtime.getURL('inject.js'), 'head');
 })
 
-const handleFromWeb = async (event) => {
-    if (event.data.from=="rosave_inject") {
-        const data = event.data.data;
-        if (isNaN(data.amount)) {data.amount=0}
-        if (!window.devDonate) {
-            extension.storage.sync.get("amounts",function(val){
-                val=val.amounts
-		        if (val[data.type]==undefined) {return}
-                val[data.type]+=Math.floor(data.amount*savings[data.type])
-                val.total+=Math.floor(data.amount*savings[data.type])
-		        extension.storage.sync.set({amounts:val})
-            })
-        }
-    } else if (event.data.from=="rosave_inject_gamejoin") {
-        const data = event.data.data
-        if (data.response==undefined || data.response==null) {
-            let response = await gameJoinMethod()
-            data.response = response
-            event.source.postMessage(event.data)
-        }
-    }
-};
-
-window.addEventListener('message', handleFromWeb);
 
 /*
     kinda a spaghetti mess as i'm copying this from wawaifier
